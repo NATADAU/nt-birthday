@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>С Днём Рождения, Наталья!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#fffbf2;
+  --gold:#e8960a;--gold2:#f5b800;
+  --mag:#d4006e;--vio:#7b2fff;--teal:#00b5a4;--coral:#ff5252;
+  --text:#1a1008;--text2:#5a4a2f;--text3:#9a8060;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden}
+
+#cc{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+.bg-dots{position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,0.045) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;z-index:1}
+
+.ribbon{position:relative;z-index:2;height:6px;
+  background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal),var(--gold2),var(--coral),var(--mag));
+  background-size:300% 100%;animation:slide 4s linear infinite}
+@keyframes slide{from{background-position:0% 50%}to{background-position:300% 50%}}
+
+.hero,.section,.finale,.footer,.sep{position:relative;z-index:2}
+
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px 72px;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-120px;right:-120px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,184,0,0.2),transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:260px;height:260px;background:radial-gradient(circle,rgba(212,0,110,0.15),transparent 70%);border-radius:50%;pointer-events:none}
+
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:0.35em;text-transform:uppercase;color:#fff;
+  background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal),var(--mag));
+  background-size:300% 100%;animation:slide 3s linear infinite;
+  padding:9px 22px;border-radius:100px;margin-bottom:30px;box-shadow:0 4px 24px rgba(212,0,110,0.25)}
+
+h1{font-family:'Playfair Display',serif;font-weight:900;line-height:0.92;margin-bottom:6px}
+.h1a{display:block;font-size:clamp(54px,14vw,92px);color:var(--text)}
+.h1b{display:block;font-size:clamp(54px,14vw,92px);
+  background:linear-gradient(120deg,var(--gold),var(--gold2),var(--coral),var(--mag));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200% 100%;animation:shimmer 3s ease-in-out infinite alternate}
+@keyframes shimmer{from{background-position:0% 50%}to{background-position:100% 50%}}
+
+.name{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(46px,13vw,80px);color:var(--text);margin:10px 0 26px}
+.name::after{content:'';display:block;height:5px;background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal),var(--gold2));background-size:200% 100%;animation:slide 3s linear infinite;border-radius:3px;margin-top:6px}
+
+.hero-sub{font-size:clamp(14px,4vw,17px);color:var(--text2);max-width:330px;line-height:1.75}
+.hero-sub strong{color:var(--mag);font-weight:800}
+
+.scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:var(--text3);font-size:18px;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+.section{padding:60px 20px 48px;max-width:480px;margin:0 auto}
+.s-head{text-align:center;margin-bottom:40px}
+.s-head h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(26px,7vw,36px);line-height:1.2;color:var(--text)}
+.s-head h2.grad{background:linear-gradient(120deg,var(--mag),var(--vio));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s-head p{font-size:13px;color:var(--text3);margin-top:6px}
+.s-rule{width:64px;height:3px;background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal));border-radius:3px;margin:12px auto 0}
+
+/* ── PLANETS ── */
+.planets{display:grid;grid-template-columns:1fr 1fr;gap:24px 16px;justify-items:center}
+.planet{display:flex;flex-direction:column;align-items:center;gap:12px;cursor:default;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1)}
+.planet:hover{transform:scale(1.55)}
+.planet:active{transform:scale(1.42)}
+.planet-ball{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;
+  box-shadow:4px 6px 18px rgba(0,0,0,0.18),inset -8px -8px 20px rgba(0,0,0,0.12),inset 4px 4px 12px rgba(255,255,255,0.35);
+  transition:box-shadow 0.35s ease}
+.planet:hover .planet-ball{box-shadow:6px 8px 28px rgba(0,0,0,0.22),inset -8px -8px 20px rgba(0,0,0,0.15),inset 4px 4px 14px rgba(255,255,255,0.45)}
+.p-family  .planet-ball{background:radial-gradient(circle at 35% 35%,#ffe89a,#e8960a 60%,#a05e00)}
+.p-husband .planet-ball{background:radial-gradient(circle at 35% 35%,#ffc2d4,#d4006e 60%,#7a003d)}
+.p-dog     .planet-ball{background:radial-gradient(circle at 35% 35%,#d8b4fe,#7b2fff 60%,#3d0099)}
+.p-dacha   .planet-ball{background:radial-gradient(circle at 35% 35%,#a7f3d0,#00b5a4 60%,#005c54)}
+.p-song    .planet-ball{background:radial-gradient(circle at 35% 35%,#fca5a5,#ff5252 60%,#991a1a)}
+.p-dance   .planet-ball{background:radial-gradient(circle at 35% 35%,#fde68a,#f5b800 60%,#805e00)}
+.planet-ball::before{content:'';position:absolute;width:130%;height:30%;border:2px solid rgba(255,255,255,0.35);border-radius:50%;top:35%;transform:rotateX(70deg);pointer-events:none}
+.planet-ball svg{width:44px;height:44px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+.planet-label{text-align:center}
+.planet-label h3{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.planet-label p{font-size:11.5px;color:var(--text3);line-height:1.45;max-width:130px}
+
+/* ── WISHES ── */
+.wishes{display:flex;flex-direction:column;gap:10px}
+.wish{display:flex;align-items:flex-start;gap:14px;background:#fff;border-radius:16px;padding:18px 20px;position:relative;overflow:hidden;
+  box-shadow:0 0 0 1.5px rgba(0,0,0,0.07);transition:transform 0.2s}
+.wish:hover{transform:translateX(4px)}
+.wish::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--mag),var(--vio),var(--teal),var(--gold2));
+  background-size:100% 300%;animation:barslide 3s linear infinite}
+@keyframes barslide{from{background-position:50% 0%}to{background-position:50% 300%}}
+.wm{flex-shrink:0;width:30px;height:30px;margin-top:1px}
+.wish p{font-size:15px;color:var(--text2);line-height:1.65;font-weight:600}
+
+/* ── FINALE ── */
+.finale{text-align:center;padding:64px 24px 40px;max-width:480px;margin:0 auto}
+.finale h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,10vw,56px);
+  background:linear-gradient(135deg,var(--mag),var(--vio),var(--teal),var(--gold2));
+  background-size:300% 100%;animation:slide 3s linear infinite;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.15;margin-bottom:20px}
+.finale>p{font-size:16px;color:var(--text2);max-width:320px;margin:0 auto 36px;line-height:1.75;font-weight:600}
+.plaque{display:inline-block;border-radius:24px;padding:3px;
+  background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal),var(--gold2),var(--mag));
+  background-size:300% 100%;animation:slide 2.5s linear infinite;
+  box-shadow:0 6px 32px rgba(212,0,110,0.22);margin-bottom:36px}
+.plaque-in{background:var(--cream);border-radius:22px;padding:26px 40px}
+.plaque-in p{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);line-height:1.5}
+
+/* ── BUTTONS ── */
+.music-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2.5px solid var(--mag);color:var(--mag);font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;padding:14px 30px;border-radius:100px;cursor:pointer;transition:background 0.2s,color 0.2s,transform 0.15s;margin-bottom:20px;box-shadow:0 4px 18px rgba(212,0,110,0.15)}
+.music-btn:hover{background:var(--mag);color:#fff;transform:scale(1.04)}
+.music-btn:active{transform:scale(0.97)}
+.music-btn.playing svg{animation:spin-note 1s linear infinite}
+@keyframes spin-note{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.surprise-btn{display:inline-flex;align-items:center;gap:10px;border:none;color:#fff;font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;padding:16px 36px;border-radius:100px;cursor:pointer;
+  background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal),var(--gold2),var(--mag));
+  background-size:300% 100%;animation:slide 2.5s linear infinite;
+  box-shadow:0 6px 28px rgba(123,47,255,0.3);transition:transform 0.15s,box-shadow 0.15s}
+.surprise-btn:hover{transform:scale(1.05);box-shadow:0 8px 36px rgba(123,47,255,0.45)}
+.surprise-btn:active{transform:scale(0.97)}
+
+/* ── OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,0,20,0.65);align-items:center;justify-content:center;padding:24px}
+.overlay.show{display:flex}
+.surprise-box{background:var(--cream);border-radius:28px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 16px 60px rgba(0,0,0,0.35);position:relative}
+.surprise-box h3{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;margin-bottom:18px;
+  background:linear-gradient(120deg,var(--mag),var(--vio),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.surprise-box p{font-size:16px;color:var(--text2);line-height:1.75;font-weight:600;margin-bottom:28px}
+
+/* спасибо — особая кнопка */
+.thankyou-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  border:none;color:#fff;
+  font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;
+  padding:14px 34px;border-radius:100px;cursor:pointer;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),#ffec6e,var(--gold),var(--gold2));
+  background-size:300% 100%;animation:slide 2s linear infinite;
+  box-shadow:0 4px 24px rgba(232,150,10,0.45);
+  transition:transform 0.15s,box-shadow 0.15s;
+  position:relative;overflow:visible;
+}
+.thankyou-btn:hover{transform:scale(1.06);box-shadow:0 6px 32px rgba(232,150,10,0.6)}
+.thankyou-btn:active{transform:scale(0.97)}
+
+.footer{text-align:center;padding:20px 24px 60px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.sep{height:48px;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.04),transparent)}
+</style>
+</head>
+<body>
+
+<canvas id="cc"></canvas>
+<div class="bg-dots"></div>
+<div class="ribbon"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">
+    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.3 13.5,5.6 10.1,8.7 11.1,13.3 7,10.8 2.9,13.3 3.9,8.7 0.5,5.6 5.2,5.3" fill="white"/></svg>
+    Сегодня особенный день
+    <svg width="13" height="13" viewBox="0 0 14 14"><polygon points="7,1 8.8,5.3 13.5,5.6 10.1,8.7 11.1,13.3 7,10.8 2.9,13.3 3.9,8.7 0.5,5.6 5.2,5.3" fill="white"/></svg>
+  </div>
+  <h1><span class="h1a">С Днём</span><span class="h1b">Рождения</span></h1>
+  <div class="name">НАТАЛЬЯ!</div>
+  <p class="hero-sub">Сегодня надеваем <strong>всё лучшее сразу</strong> — корону, улыбку и самое праздничное настроение!</p>
+  <span class="scroll-hint">↓</span>
+</section>
+
+<div class="sep"></div>
+
+<!-- PLANETS -->
+<section class="section">
+  <div class="s-head">
+    <h2>Маленькая вселенная<br>большой Натальи</h2>
+    <p>Всё, что наполняет сердце</p>
+    <div class="s-rule"></div>
+  </div>
+  <div class="planets">
+    <div class="planet p-family">
+      <div class="planet-ball">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="13" r="7" fill="rgba(255,255,255,0.9)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+          <circle cx="13" cy="19" r="5.5" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+          <circle cx="35" cy="19" r="5.5" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+          <path d="M5 40c0-7 6-12 19-12s19 5 19 12" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="planet-label"><h3>Семья</h3><p>Дети и любимый внук — главное сокровище</p></div>
+    </div>
+    <div class="planet p-husband">
+      <div class="planet-ball">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M24 40C16 34 6 28 6 18a10 10 0 0 1 18-5 10 10 0 0 1 18 5c0 10-10 16-18 22z" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="planet-label"><h3>Любимый муж</h3><p>Надёжное плечо и вечная поддержка</p></div>
+    </div>
+    <div class="planet p-dog">
+      <div class="planet-ball">
+        <svg viewBox="0 0 48 48" fill="none">
+          <ellipse cx="24" cy="30" rx="13" ry="9" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <circle cx="24" cy="20" r="8" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <ellipse cx="16" cy="22" rx="4" ry="3" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+          <ellipse cx="32" cy="22" rx="4" ry="3" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+          <circle cx="21" cy="20" r="1.5" fill="rgba(80,0,160,0.7)"/>
+          <circle cx="27" cy="20" r="1.5" fill="rgba(80,0,160,0.7)"/>
+          <path d="M21 24q3 2 6 0" stroke="rgba(80,0,160,0.6)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="planet-label"><h3>Бонька</h3><p>Преданный пушистый друг у двери</p></div>
+    </div>
+    <div class="planet p-dacha">
+      <div class="planet-ball">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="18" y="28" width="12" height="13" rx="2" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <circle cx="24" cy="17" r="10" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <line x1="24" y1="7" x2="24" y2="3" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="17" y1="10" x2="14" y2="7" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="31" y1="10" x2="34" y2="7" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="planet-label"><h3>Дача</h3><p>Уголок рая, обустроенный с любовью</p></div>
+    </div>
+    <div class="planet p-song">
+      <div class="planet-ball">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="20" y="8" width="10" height="22" rx="5" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <path d="M12 22a12 12 0 0 0 24 0" stroke="rgba(255,255,255,0.8)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <line x1="24" y1="34" x2="24" y2="42" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="16" y1="42" x2="32" y2="42" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="planet-label"><h3>Песня</h3><p>Поёт от всего сердца — душа компании</p></div>
+    </div>
+    <div class="planet p-dance">
+      <div class="planet-ball">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="10" r="5" fill="rgba(255,255,255,0.9)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <path d="M24 15L20 28L14 38" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M24 15L28 28L34 38" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M22 22L30 20" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M15 34Q24 30 33 34" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="planet-label"><h3>Танец</h3><p>Энергия, от которой загорается весь зал</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- WISHES -->
+<section class="section">
+  <div class="s-head">
+    <h2 class="grad">Наши пожелания</h2>
+    <div class="s-rule"></div>
+  </div>
+  <div class="wishes">
+    <div class="wish">
+      <svg class="wm" viewBox="0 0 28 28" fill="none"><polygon points="14,2 17.6,10.3 27,11.1 20.1,17.4 22.2,26.6 14,21.7 5.8,26.6 7.9,17.4 1,11.1 10.4,10.3" fill="#fde68a" stroke="#e8960a" stroke-width="1.5"/></svg>
+      <p>Пусть каждый день сверкает, как новогодняя гирлянда!</p>
+    </div>
+    <div class="wish">
+      <svg class="wm" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" fill="#a7f3d0" stroke="#00b5a4" stroke-width="1.5"/><path d="M8 14l4 5 8-9" stroke="#00b5a4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <p>Здоровья — крепкого, как корни старой яблони на даче!</p>
+    </div>
+    <div class="wish">
+      <svg class="wm" viewBox="0 0 28 28" fill="none"><path d="M14 24C10 20 3 16 3 10a7 7 0 0 1 11-4 7 7 0 0 1 11 4c0 6-7 10-11 14z" fill="#fca5a5" stroke="#d4006e" stroke-width="1.5"/></svg>
+      <p>Любви — большой, как урожай в августе!</p>
+    </div>
+    <div class="wish">
+      <svg class="wm" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" fill="#c4b5fd" stroke="#7b2fff" stroke-width="1.5"/><circle cx="11" cy="14" r="2" fill="#7b2fff"/><circle cx="17" cy="14" r="2" fill="#7b2fff"/></svg>
+      <p>Радости — звонкой, как любимая песня!</p>
+    </div>
+    <div class="wish">
+      <svg class="wm" viewBox="0 0 28 28" fill="none"><polygon points="14,3 16.5,10.5 24.5,10.5 18.5,15.5 20.5,23 14,18.5 7.5,23 9.5,15.5 3.5,10.5 11.5,10.5" fill="#fde68a" stroke="#e8960a" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="#e8960a"/></svg>
+      <p>Энергии — бесконечной, как твои танцы!</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINALE -->
+<section class="finale">
+  <h2>За тебя,<br>Наталья!</h2>
+  <p>Свети ярче всех бриллиантов, танцуй до утра, пой во весь голос — и пусть дача цветёт, как никогда!</p>
+  <div class="plaque">
+    <div class="plaque-in">
+      <p>С любовью,<br>твои коллеги ✦</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+    <svg id="musicIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </svg>
+    <span id="musicLabel">Включить музыку</span>
+  </button>
+  <button class="surprise-btn" onclick="showSurprise()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/>
+      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+    </svg>
+    Сюрприз!
+  </button>
+</footer>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="surprise-box" id="surpriseBox">
+    <h3>Специально для тебя!</h3>
+    <p>Наталья, ты — настоящее солнце нашего коллектива. Твоя энергия заряжает всех вокруг, твой смех — лучший саундтрек рабочего дня, а советы — на вес золота. Мы очень рады, что ты есть у нас! Счастья тебе — огромного, как небо над дачей в августе! ✦</p>
+    <button class="thankyou-btn" id="thankyouBtn" onclick="onThankyou(event)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+      </svg>
+      Спасибо!
+    </button>
+  </div>
+</div>
+
+<audio id="audio" src="music.mp3" loop></audio>
+
+<script>
+/* ── MUSIC ── */
+const audio = document.getElementById('audio');
+let playing = false;
+function toggleMusic(){
+  if(!playing){
+    audio.play().catch(()=>{});
+    playing=true;
+    document.getElementById('musicLabel').textContent='Пауза';
+    document.getElementById('musicBtn').classList.add('playing');
+  }else{
+    audio.pause();
+    playing=false;
+    document.getElementById('musicLabel').textContent='Включить музыку';
+    document.getElementById('musicBtn').classList.remove('playing');
+  }
+}
+
+/* ── SURPRISE ── */
+function showSurprise(){
+  document.getElementById('overlay').classList.add('show');
+}
+function hideSurprise(){
+  document.getElementById('overlay').classList.remove('show');
+}
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('overlay')) hideSurprise();
+}
+function onThankyou(e){
+  // get button position to launch from it
+  const btn = document.getElementById('thankyouBtn');
+  const rect = btn.getBoundingClientRect();
+  const ox = rect.left + rect.width/2;
+  const oy = rect.top + rect.height/2;
+  champagneBurst(ox, oy);
+  // close overlay after short delay so user sees the burst
+  setTimeout(hideSurprise, 400);
+}
+
+/* ── CANVAS ── */
+const cv = document.getElementById('cc');
+const cx = cv.getContext('2d');
+function resize(){ cv.width=innerWidth; cv.height=innerHeight; }
+resize(); addEventListener('resize', resize);
+
+const COLORS=['#e8960a','#f5b800','#ffd84d','#d4006e','#ff69a8','#ff3399',
+              '#7b2fff','#a855f7','#c084fc','#00b5a4','#2dd4bf','#34d399',
+              '#ff5252','#ff8a65','#ffab40','#4fc3f7','#fff176','#f9a8d4','#ce93d8','#fff'];
+const CHAMPAGNE=['#ffd700','#ffec6e','#ffe066','#fff5b0','#f5b800','#fffbe0','#ffc400','#ffdf00','#ffffff'];
+
+function rnd(a,b){ return a+Math.random()*(b-a); }
+function rc(){ return COLORS[0|rnd(0,COLORS.length)]; }
+function rg(){ return CHAMPAGNE[0|rnd(0,CHAMPAGNE.length)]; }
+
+/* ── CONFETTI — slower vy ── */
+class Piece{
+  constructor(x){
+    this.x=x!=null?x:rnd(0,cv.width); this.y=rnd(-80,-5);
+    this.c=rc(); this.t=0|rnd(0,5);
+    this.w=rnd(5,16); this.h=rnd(4,10);
+    this.vx=rnd(-2,2);
+    this.vy=rnd(1.0,2.8); /* ← slower: was 2–6.5 */
+    this.rot=rnd(0,Math.PI*2); this.vr=rnd(-0.08,0.08);
+    this.al=1; this.life=rnd(300,560); this.age=0; /* longer life to compensate */
+  }
+  tick(){
+    this.x+=this.vx+Math.sin(this.age*0.025)*0.8;
+    this.y+=this.vy; this.rot+=this.vr; this.age++;
+    const f=this.life*0.72;
+    if(this.age>f) this.al=1-(this.age-f)/(this.life-f);
+    return this.age<this.life&&this.y<cv.height+70;
+  }
+  draw(){
+    cx.save(); cx.translate(this.x,this.y); cx.rotate(this.rot);
+    cx.globalAlpha=Math.max(0,this.al); cx.fillStyle=this.c;
+    if(this.t===0){cx.fillRect(-this.w/2,-this.h/2,this.w,this.h);}
+    else if(this.t===1){cx.beginPath();cx.arc(0,0,this.w/2,0,Math.PI*2);cx.fill();}
+    else if(this.t===2){
+      cx.beginPath();cx.moveTo(0,-this.h);cx.lineTo(this.w/2,0);
+      cx.lineTo(0,this.h);cx.lineTo(-this.w/2,0);cx.closePath();cx.fill();
+    }else if(this.t===3){
+      cx.beginPath();
+      for(let i=0;i<5;i++){
+        const a1=(i*4*Math.PI/5)-Math.PI/2,a2=a1+Math.PI/5;
+        const r=this.w/2,ri=r*0.4;
+        i===0?cx.moveTo(Math.cos(a1)*r,Math.sin(a1)*r):cx.lineTo(Math.cos(a1)*r,Math.sin(a1)*r);
+        cx.lineTo(Math.cos(a2)*ri,Math.sin(a2)*ri);
+      }
+      cx.closePath();cx.fill();
+    }else{
+      cx.beginPath();cx.moveTo(0,-this.w/2);
+      cx.lineTo(this.w/2,this.h/2);cx.lineTo(-this.w/2,this.h/2);cx.closePath();cx.fill();
+    }
+    cx.restore();
+  }
+}
+
+/* ── SPIRAL — slower too ── */
+class Spiral{
+  constructor(x){
+    this.x=x!=null?x:rnd(0,cv.width); this.y=rnd(-40,-5);
+    this.c=rc(); this.vy=rnd(0.9,2.5); this.vx=rnd(-0.8,0.8); /* ← slower */
+    this.radius=rnd(6,14); this.turns=rnd(2.5,5);
+    this.speed=rnd(0.05,0.10); this.angle=0; this.lineW=rnd(1.5,3);
+    this.al=1; this.life=rnd(280,480); this.age=0;
+  }
+  tick(){
+    this.x+=this.vx; this.y+=this.vy;
+    this.angle+=this.speed; this.age++;
+    const f=this.life*0.65;
+    if(this.age>f) this.al=1-(this.age-f)/(this.life-f);
+    return this.age<this.life&&this.y<cv.height+60;
+  }
+  draw(){
+    cx.save(); cx.translate(this.x,this.y);
+    cx.globalAlpha=Math.max(0,this.al);
+    cx.strokeStyle=this.c; cx.lineWidth=this.lineW; cx.lineCap='round';
+    const maxA=this.turns*Math.PI*2;
+    const progress=Math.min(this.angle,maxA);
+    const steps=Math.ceil(progress/0.08);
+    if(steps<2){cx.restore();return;}
+    cx.beginPath();
+    for(let i=0;i<=steps;i++){
+      const a=(i/steps)*progress;
+      const r=(a/maxA)*this.radius;
+      i===0?cx.moveTo(Math.cos(a)*r,Math.sin(a)*r):cx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+    }
+    cx.stroke(); cx.restore();
+  }
+}
+
+/* ── CHAMPAGNE BUBBLE — hollow with inner highlight ── */
+class Bubble{
+  constructor(ox,oy){
+    const angle=rnd(-Math.PI*0.92,-Math.PI*0.08);
+    const speed=rnd(5,20);
+    this.x=ox; this.y=oy;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.gravity=rnd(0.22,0.45);
+    this.r=rnd(4,13);
+    this.c=rg();
+    this.al=1; this.life=rnd(70,180); this.age=0;
+    this.type='bubble'; // always hollow bubble with highlight
+  }
+  tick(){
+    this.x+=this.vx; this.y+=this.vy;
+    this.vy+=this.gravity; this.vx*=0.98;
+    this.age++;
+    const f=this.life*0.5;
+    if(this.age>f) this.al=1-(this.age-f)/(this.life-f);
+    return this.age<this.life;
+  }
+  draw(){
+    cx.save(); cx.translate(this.x,this.y);
+    cx.globalAlpha=Math.max(0,this.al);
+    // outer ring
+    cx.beginPath(); cx.arc(0,0,this.r,0,Math.PI*2);
+    cx.strokeStyle=this.c; cx.lineWidth=1.8; cx.stroke();
+    // inner shimmer fill — very translucent
+    cx.beginPath(); cx.arc(0,0,this.r,0,Math.PI*2);
+    cx.fillStyle=this.c.replace('#','rgba(').replace(/^rgba\((..)(..)(..)$/,(_,r,g,b)=>`rgba(${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},0.08)`);
+    // simpler: just use a fixed low-alpha white fill for inner glow
+    cx.fillStyle='rgba(255,255,255,0.07)'; cx.fill();
+    // bright highlight spot top-left
+    cx.beginPath(); cx.arc(-this.r*0.32,-this.r*0.32,this.r*0.28,0,Math.PI*2);
+    cx.fillStyle='rgba(255,255,255,0.75)'; cx.fill();
+    // smaller secondary highlight
+    cx.beginPath(); cx.arc(-this.r*0.1,-this.r*0.55,this.r*0.12,0,Math.PI*2);
+    cx.fillStyle='rgba(255,255,255,0.5)'; cx.fill();
+    cx.restore();
+  }
+}
+
+/* ── GOLDEN DROP — filled, arc trajectory ── */
+class Drop{
+  constructor(ox,oy){
+    const angle=rnd(-Math.PI*0.88,-Math.PI*0.12);
+    const speed=rnd(3,14);
+    this.x=ox; this.y=oy;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.gravity=rnd(0.4,0.7); // heavy — falls fast
+    this.r=rnd(3,8);
+    this.al=1; this.life=rnd(50,120); this.age=0;
+  }
+  tick(){
+    this.x+=this.vx; this.y+=this.vy;
+    this.vy+=this.gravity; this.vx*=0.97;
+    this.age++;
+    const f=this.life*0.45;
+    if(this.age>f) this.al=1-(this.age-f)/(this.life-f);
+    return this.age<this.life;
+  }
+  draw(){
+    cx.save(); cx.translate(this.x,this.y);
+    cx.globalAlpha=Math.max(0,this.al);
+    // golden filled circle
+    cx.beginPath(); cx.arc(0,0,this.r,0,Math.PI*2);
+    cx.fillStyle='#ffd700'; cx.fill();
+    // gold shimmer ring
+    cx.strokeStyle='#ffec6e'; cx.lineWidth=1; cx.stroke();
+    // tiny white glint
+    cx.beginPath(); cx.arc(-this.r*0.3,-this.r*0.3,this.r*0.22,0,Math.PI*2);
+    cx.fillStyle='rgba(255,255,255,0.8)'; cx.fill();
+    cx.restore();
+  }
+}
+
+/* ── SPARKLE — 4-pointed star, rotating ── */
+class Sparkle{
+  constructor(ox,oy){
+    const angle=rnd(-Math.PI*0.95,-Math.PI*0.05);
+    const speed=rnd(6,22);
+    this.x=ox; this.y=oy;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.gravity=rnd(0.15,0.3);
+    this.r=rnd(5,14);
+    this.rot=rnd(0,Math.PI/2);
+    this.vr=rnd(0.06,0.14);
+    this.c=CHAMPAGNE[0|rnd(0,CHAMPAGNE.length)];
+    this.al=1; this.life=rnd(60,150); this.age=0;
+  }
+  tick(){
+    this.x+=this.vx; this.y+=this.vy;
+    this.vy+=this.gravity; this.vx*=0.98;
+    this.rot+=this.vr; this.age++;
+    const f=this.life*0.5;
+    if(this.age>f) this.al=1-(this.age-f)/(this.life-f);
+    return this.age<this.life;
+  }
+  draw(){
+    cx.save(); cx.translate(this.x,this.y); cx.rotate(this.rot);
+    cx.globalAlpha=Math.max(0,this.al);
+    cx.fillStyle=this.c;
+    // 4-point star
+    cx.beginPath();
+    for(let i=0;i<4;i++){
+      const a=i*Math.PI/2, b=a+Math.PI/4;
+      const r=this.r, ri=r*0.28;
+      i===0?cx.moveTo(Math.cos(a)*r,Math.sin(a)*r):cx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+      cx.lineTo(Math.cos(b)*ri,Math.sin(b)*ri);
+    }
+    cx.closePath(); cx.fill();
+    // bright center dot
+    cx.beginPath(); cx.arc(0,0,this.r*0.18,0,Math.PI*2);
+    cx.fillStyle='rgba(255,255,255,0.9)'; cx.fill();
+    cx.restore();
+  }
+}
+
+/* ── RISING STREAM BUBBLES (from bottle neck) ── */
+class Stream{
+  constructor(ox,oy){
+    this.x=ox+rnd(-8,8); this.y=oy-rnd(0,20);
+    this.vx=rnd(-0.4,0.4); this.vy=rnd(-2.5,-6);
+    this.r=rnd(2,5); this.c=rg();
+    this.al=1; this.life=rnd(35,80); this.age=0;
+  }
+  tick(){
+    this.x+=this.vx+Math.sin(this.age*0.25)*0.35;
+    this.y+=this.vy; this.vy*=0.97;
+    this.age++;
+    const f=this.life*0.5;
+    if(this.age>f) this.al=1-(this.age-f)/(this.life-f);
+    return this.age<this.life&&this.r>0.4;
+  }
+  draw(){
+    cx.save(); cx.translate(this.x,this.y);
+    cx.globalAlpha=Math.max(0,this.al*0.75);
+    cx.beginPath(); cx.arc(0,0,this.r,0,Math.PI*2);
+    cx.strokeStyle=this.c; cx.lineWidth=1.2; cx.stroke();
+    cx.beginPath(); cx.arc(-this.r*0.3,-this.r*0.3,this.r*0.25,0,Math.PI*2);
+    cx.fillStyle='rgba(255,255,255,0.6)'; cx.fill();
+    cx.restore();
+  }
+}
+
+const pieces=[],spirals=[],bubbles=[],drops=[],sparkles=[],streams=[];
+let frame=0;
+
+for(let i=0;i<260;i++) pieces.push(new Piece());
+for(let i=0;i<40;i++)  spirals.push(new Spiral());
+
+/* ── CHAMPAGNE BURST from button position ── */
+window.champagneBurst=function(ox,oy){
+  // use screen center bottom if no coords given
+  if(ox==null){ ox=cv.width*0.5; oy=cv.height*0.92; }
+
+  // hollow bubbles
+  for(let i=0;i<80;i++)  bubbles.push(new Bubble(ox+rnd(-15,15), oy+rnd(-5,5)));
+  // golden heavy drops
+  for(let i=0;i<60;i++)  drops.push(new Drop(ox+rnd(-10,10), oy+rnd(-5,5)));
+  // 4-point sparkles
+  for(let i=0;i<50;i++)  sparkles.push(new Sparkle(ox+rnd(-12,12), oy+rnd(-5,5)));
+  // rising stream
+  for(let i=0;i<40;i++)  streams.push(new Stream(ox, oy));
+  // extra confetti burst
+  for(let i=0;i<60;i++)  pieces.push(new Piece(rnd(cv.width*0.15,cv.width*0.85)));
+};
+
+function loop(){
+  requestAnimationFrame(loop);
+  cx.clearRect(0,0,cv.width,cv.height);
+  frame++;
+  if(frame%3===0&&pieces.length<380)  pieces.push(new Piece());
+  if(frame%8===0&&spirals.length<60)  spirals.push(new Spiral());
+
+  for(let i=streams.length-1;i>=0;i--)  { streams[i].draw();  if(!streams[i].tick())  streams.splice(i,1);  }
+  for(let i=drops.length-1;i>=0;i--)    { drops[i].draw();    if(!drops[i].tick())    drops.splice(i,1);    }
+  for(let i=bubbles.length-1;i>=0;i--)  { bubbles[i].draw();  if(!bubbles[i].tick())  bubbles.splice(i,1);  }
+  for(let i=sparkles.length-1;i>=0;i--) { sparkles[i].draw(); if(!sparkles[i].tick()) sparkles.splice(i,1); }
+  for(let i=spirals.length-1;i>=0;i--)  { spirals[i].draw();  if(!spirals[i].tick())  spirals.splice(i,1);  }
+  for(let i=pieces.length-1;i>=0;i--)   { pieces[i].draw();   if(!pieces[i].tick())   pieces.splice(i,1);   }
+}
+loop();
+</script>
+</body>
+</html>
