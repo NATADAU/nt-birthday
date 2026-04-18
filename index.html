@@ -62,27 +62,153 @@ h1{font-family:'Playfair Display',serif;font-weight:900;line-height:0.92;margin-
 .s-head p{font-size:13px;color:var(--text3);margin-top:6px}
 .s-rule{width:64px;height:3px;background:linear-gradient(90deg,var(--mag),var(--vio),var(--teal));border-radius:3px;margin:12px auto 0}
 
-/* ── PLANETS ── */
-.planets{display:grid;grid-template-columns:1fr 1fr;gap:24px 16px;justify-items:center}
-.planet{display:flex;flex-direction:column;align-items:center;gap:12px;cursor:default;
-  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1)}
-.planet:hover{transform:scale(1.55)}
-.planet:active{transform:scale(1.42)}
-.planet-ball{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;
-  box-shadow:4px 6px 18px rgba(0,0,0,0.18),inset -8px -8px 20px rgba(0,0,0,0.12),inset 4px 4px 12px rgba(255,255,255,0.35);
-  transition:box-shadow 0.35s ease}
-.planet:hover .planet-ball{box-shadow:6px 8px 28px rgba(0,0,0,0.22),inset -8px -8px 20px rgba(0,0,0,0.15),inset 4px 4px 14px rgba(255,255,255,0.45)}
-.p-family  .planet-ball{background:radial-gradient(circle at 35% 35%,#ffe89a,#e8960a 60%,#a05e00)}
-.p-husband .planet-ball{background:radial-gradient(circle at 35% 35%,#ffc2d4,#d4006e 60%,#7a003d)}
-.p-dog     .planet-ball{background:radial-gradient(circle at 35% 35%,#d8b4fe,#7b2fff 60%,#3d0099)}
-.p-dacha   .planet-ball{background:radial-gradient(circle at 35% 35%,#a7f3d0,#00b5a4 60%,#005c54)}
-.p-song    .planet-ball{background:radial-gradient(circle at 35% 35%,#fca5a5,#ff5252 60%,#991a1a)}
-.p-dance   .planet-ball{background:radial-gradient(circle at 35% 35%,#fde68a,#f5b800 60%,#805e00)}
-.planet-ball::before{content:'';position:absolute;width:130%;height:30%;border:2px solid rgba(255,255,255,0.35);border-radius:50%;top:35%;transform:rotateX(70deg);pointer-events:none}
-.planet-ball svg{width:44px;height:44px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
-.planet-label{text-align:center}
-.planet-label h3{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
-.planet-label p{font-size:11.5px;color:var(--text3);line-height:1.45;max-width:130px}
+/* ── PLANET BUTTONS GRID ── */
+.planets{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px 8px;       /* 24px vertical (room for label), 8px horizontal */
+  justify-items:center;
+  margin-bottom:0;
+  padding:0 4px;      /* slight side padding so active ring doesn't clip */
+}
+.planet{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.planet-ball{
+  width:88px;height:88px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:
+    -4px -4px 10px rgba(255,255,255,0.35),
+    5px 5px 14px rgba(0,0,0,0.5),
+    0 0 0 3px rgba(255,255,255,0.1);
+  transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.18s ease,filter 0.18s ease;
+}
+.planet-ball::before{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:3px solid currentColor;
+  opacity:0.5;filter:blur(3px);
+  transition:opacity 0.2s,filter 0.2s;
+  pointer-events:none;
+}
+.planet-ball svg{width:36px;height:36px;position:relative;z-index:1;filter:drop-shadow(0 0 5px rgba(255,255,255,0.55))}
+.planet:hover .planet-ball{
+  transform:translateY(-2px) scale(1.07);
+  box-shadow:-5px -5px 12px rgba(255,255,255,0.4),6px 6px 18px rgba(0,0,0,0.55),0 0 0 3px rgba(255,255,255,0.15);
+}
+.planet:hover .planet-ball::before{opacity:0.9;filter:blur(6px)}
+.planet.active .planet-ball{
+  transform:translateY(2px) scale(0.97);
+  box-shadow:-2px -2px 5px rgba(255,255,255,0.18),2px 2px 6px rgba(0,0,0,0.35),inset 3px 3px 10px rgba(0,0,0,0.5),inset -2px -2px 6px rgba(255,255,255,0.1);
+}
+.planet.active .planet-ball::before{opacity:1;filter:blur(7px);border-width:4px}
+.planet.active .planet-ball::after{
+  content:'';position:absolute;inset:-7px;border-radius:50%;
+  border:2px solid currentColor;
+  animation:ring-spin 2s linear infinite;opacity:0.7;
+}
+@keyframes ring-spin{
+  0%  {transform:rotate(0deg)  scale(1)}
+  50% {transform:rotate(180deg) scale(1.04)}
+  100%{transform:rotate(360deg) scale(1)}
+}
+/* wave */
+@keyframes planet-wave{
+  0%,100%{transform:translateY(0)}
+  40%    {transform:translateY(-14px) scale(1.08)}
+  60%    {transform:translateY(-8px)  scale(1.05)}
+}
+.planet-ball.wave{animation:planet-wave 0.7s cubic-bezier(0.34,1.56,0.64,1) both}
+.p-family  .planet-ball{background:radial-gradient(circle at 38% 38%,#ffe89a,#c87000 55%,#6b3e00);color:#ffd700}
+.p-husband .planet-ball{background:radial-gradient(circle at 38% 38%,#ffaecf,#b0005a 55%,#5a0030);color:#ff3399}
+.p-dog     .planet-ball{background:radial-gradient(circle at 38% 38%,#d8b4fe,#5b1fd6 55%,#2a0070);color:#a855f7}
+.p-dacha   .planet-ball{background:radial-gradient(circle at 38% 38%,#a7f3d0,#007a6e 55%,#003d38);color:#00e5cc}
+.p-song    .planet-ball{background:radial-gradient(circle at 38% 38%,#fca5a5,#cc1a1a 55%,#6b0000);color:#ff5252}
+.p-dance   .planet-ball{background:radial-gradient(circle at 38% 38%,#fde68a,#c47c00 55%,#5e3b00);color:#ffd700}
+
+
+.planet-name{
+  font-size:12px;font-weight:800;
+  color:var(--text2);
+  text-align:center;
+  line-height:1.25;
+  max-width:88px;      /* matches ball width — never wider */
+  word-break:break-word;
+  padding:0 2px;       /* tiny side pad so text doesn't touch grid edge */
+}
+
+/* ── GLASS INFO PANEL — выезжает сверху ── */
+.planets-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+/* панель — в потоке ВЫШЕ сетки, раскрывается вниз */
+.info-panel{
+  max-height:0;
+  overflow:visible;        /* не обрезаем углы */
+  opacity:0;
+  margin-bottom:0;
+  /* clip через scale чтобы не было overflow jump */
+  clip-path:inset(0 0 100% 0 round 20px);
+  transition:
+    max-height 0.42s cubic-bezier(0.4,0,0.2,1),
+    opacity 0.3s ease,
+    margin-bottom 0.35s ease,
+    clip-path 0.4s cubic-bezier(0.4,0,0.2,1);
+  pointer-events:none;
+}
+.info-panel.open{
+  max-height:200px;
+  opacity:1;
+  margin-bottom:16px;
+  clip-path:inset(0 0 0% 0 round 20px);
+  pointer-events:auto;
+}
+.info-inner{
+  border-radius:20px;
+  padding:18px 40px 18px 20px;
+  display:flex;align-items:flex-start;gap:14px;
+  position:relative;
+  /* НЕТ overflow:hidden — иначе срезает углы */
+  background:rgba(255,251,242,0.92);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.98);
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.09),
+    0 1px 4px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+.info-inner::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  border-radius:20px 0 0 20px;  /* совпадает с border-radius карточки */
+}
+.p-family  .info-inner::before{background:linear-gradient(180deg,#ffe89a,#e8960a)}
+.p-husband .info-inner::before{background:linear-gradient(180deg,#ffc2d4,#d4006e)}
+.p-dog     .info-inner::before{background:linear-gradient(180deg,#d8b4fe,#7b2fff)}
+.p-dacha   .info-inner::before{background:linear-gradient(180deg,#a7f3d0,#00b5a4)}
+.p-song    .info-inner::before{background:linear-gradient(180deg,#fca5a5,#ff5252)}
+.p-dance   .info-inner::before{background:linear-gradient(180deg,#fde68a,#f5b800)}
+.info-dot{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:2px 3px 10px rgba(0,0,0,0.2);
+}
+.info-dot svg{width:24px;height:24px}
+.info-text h3{font-size:15px;font-weight:800;color:var(--text);margin-bottom:4px}
+.info-text p{font-size:13px;color:var(--text2);line-height:1.6}
+.info-close{
+  position:absolute;top:10px;right:12px;
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(0,0,0,0.08);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--text2);font-weight:700;
+  transition:background 0.2s;font-family:'Nunito',sans-serif;
+}
+.info-close:hover{background:rgba(0,0,0,0.16)}
 
 /* ── WISHES ── */
 .wishes{display:flex;flex-direction:column;gap:10px}
@@ -116,6 +242,63 @@ h1{font-family:'Playfair Display',serif;font-weight:900;line-height:0.92;margin-
 .music-btn:hover{background:var(--mag);color:#fff;transform:scale(1.04)}
 .music-btn:active{transform:scale(0.97)}
 .music-btn.playing svg{animation:spin-note 1s linear infinite}
+
+/* ── MINI PLAYER ── */
+.player{
+  display:flex;align-items:center;gap:0;
+  background:#fff;
+  border-radius:100px;
+  box-shadow:0 4px 18px rgba(212,0,110,0.15);
+  border:2px solid rgba(212,0,110,0.2);
+  overflow:hidden;
+  margin-bottom:20px;
+  width:100%;
+  max-width:360px;
+}
+.player-prev,.player-next{
+  flex-shrink:0;width:42px;height:48px;
+  background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text3);font-size:16px;font-weight:900;
+  transition:background 0.15s,color 0.15s;
+  font-family:'Nunito',sans-serif;
+}
+.player-prev:hover,.player-next:hover{background:rgba(212,0,110,0.06);color:var(--mag)}
+.player-center{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:8px 4px;
+  border-left:1px solid rgba(0,0,0,0.06);
+  border-right:1px solid rgba(0,0,0,0.06);
+  min-width:0;
+}
+.player-track{
+  font-size:12px;font-weight:800;color:var(--text2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:100%;line-height:1.2;margin-bottom:4px;
+}
+.player-play{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(90deg,var(--mag),var(--vio));
+  background-size:200% 100%;
+  animation:slide 3s linear infinite;
+  color:#fff;border:none;border-radius:100px;
+  font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+  padding:6px 18px;cursor:pointer;
+  transition:opacity 0.15s,transform 0.15s;
+}
+.player-play:hover{opacity:0.88;transform:scale(1.04)}
+.player-play:active{transform:scale(0.97)}
+.player-play svg{transition:transform 0.3s}
+.player-play.playing svg{animation:spin-note 1s linear infinite}
+.player-dots{
+  display:flex;gap:4px;margin-top:5px;
+}
+.player-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(0,0,0,0.12);
+  transition:background 0.2s,transform 0.2s;
+}
+.player-dot.active{background:var(--mag);transform:scale(1.3)}
 @keyframes spin-note{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 .surprise-btn{display:inline-flex;align-items:center;gap:10px;border:none;color:#fff;font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;padding:16px 36px;border-radius:100px;cursor:pointer;
@@ -181,76 +364,99 @@ h1{font-family:'Playfair Display',serif;font-weight:900;line-height:0.92;margin-
     <p>Всё, что наполняет сердце</p>
     <div class="s-rule"></div>
   </div>
-  <div class="planets">
-    <div class="planet p-family">
+  <div class="planets-wrap">
+
+  <!-- INFO PANEL — glassmorphism, выезжает сверху -->
+  <div class="info-panel" id="infoPanel">
+    <div class="info-inner" id="infoInner">
+      <div class="info-dot" id="infoDot"></div>
+      <div class="info-text">
+        <h3 id="infoTitle"></h3>
+        <p id="infoText"></p>
+      </div>
+      <button class="info-close" onclick="closeInfo()">✕</button>
+    </div>
+  </div>
+
+  <div class="planets" id="planets">
+
+    <div class="planet p-family" onclick="showInfo('family')">
       <div class="planet-ball">
         <svg viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="13" r="7" fill="rgba(255,255,255,0.9)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-          <circle cx="13" cy="19" r="5.5" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
-          <circle cx="35" cy="19" r="5.5" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+          <circle cx="24" cy="13" r="7" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="13" cy="19" r="5.5" fill="rgba(255,255,255,0.8)"/>
+          <circle cx="35" cy="19" r="5.5" fill="rgba(255,255,255,0.8)"/>
           <path d="M5 40c0-7 6-12 19-12s19 5 19 12" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="planet-label"><h3>Семья</h3><p>Дети и любимый внук — главное сокровище</p></div>
+      <div class="planet-name">Семья</div>
     </div>
-    <div class="planet p-husband">
+
+    <div class="planet p-husband" onclick="showInfo('husband')">
       <div class="planet-ball">
         <svg viewBox="0 0 48 48" fill="none">
-          <path d="M24 40C16 34 6 28 6 18a10 10 0 0 1 18-5 10 10 0 0 1 18 5c0 10-10 16-18 22z" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <path d="M24 40C16 34 6 28 6 18a10 10 0 0 1 18-5 10 10 0 0 1 18 5c0 10-10 16-18 22z" fill="rgba(255,255,255,0.9)"/>
         </svg>
       </div>
-      <div class="planet-label"><h3>Любимый муж</h3><p>Надёжное плечо и вечная поддержка</p></div>
+      <div class="planet-name">Любимый муж</div>
     </div>
-    <div class="planet p-dog">
+
+    <div class="planet p-dog" onclick="showInfo('dog')">
       <div class="planet-ball">
         <svg viewBox="0 0 48 48" fill="none">
-          <ellipse cx="24" cy="30" rx="13" ry="9" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <circle cx="24" cy="20" r="8" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <ellipse cx="16" cy="22" rx="4" ry="3" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
-          <ellipse cx="32" cy="22" rx="4" ry="3" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
-          <circle cx="21" cy="20" r="1.5" fill="rgba(80,0,160,0.7)"/>
-          <circle cx="27" cy="20" r="1.5" fill="rgba(80,0,160,0.7)"/>
-          <path d="M21 24q3 2 6 0" stroke="rgba(80,0,160,0.6)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <ellipse cx="24" cy="30" rx="13" ry="9" fill="rgba(255,255,255,0.8)"/>
+          <circle cx="24" cy="20" r="8" fill="rgba(255,255,255,0.9)"/>
+          <ellipse cx="16" cy="22" rx="4" ry="3" fill="rgba(255,255,255,0.75)"/>
+          <ellipse cx="32" cy="22" rx="4" ry="3" fill="rgba(255,255,255,0.75)"/>
+          <circle cx="21" cy="20" r="1.5" fill="rgba(80,0,160,0.8)"/>
+          <circle cx="27" cy="20" r="1.5" fill="rgba(80,0,160,0.8)"/>
+          <path d="M21 24q3 2 6 0" stroke="rgba(80,0,160,0.7)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
         </svg>
       </div>
-      <div class="planet-label"><h3>Бонька</h3><p>Преданный пушистый друг у двери</p></div>
+      <div class="planet-name">Бонька</div>
     </div>
-    <div class="planet p-dacha">
+
+    <div class="planet p-dacha" onclick="showInfo('dacha')">
       <div class="planet-ball">
         <svg viewBox="0 0 48 48" fill="none">
-          <rect x="18" y="28" width="12" height="13" rx="2" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <circle cx="24" cy="17" r="10" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <line x1="24" y1="7" x2="24" y2="3" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
-          <line x1="17" y1="10" x2="14" y2="7" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
-          <line x1="31" y1="10" x2="34" y2="7" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+          <rect x="18" y="28" width="12" height="13" rx="2" fill="rgba(255,255,255,0.8)"/>
+          <circle cx="24" cy="17" r="10" fill="rgba(255,255,255,0.9)"/>
+          <line x1="24" y1="7" x2="24" y2="3" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="17" y1="10" x2="14" y2="7" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="31" y1="10" x2="34" y2="7" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="planet-label"><h3>Дача</h3><p>Уголок рая, обустроенный с любовью</p></div>
+      <div class="planet-name">Дача</div>
     </div>
-    <div class="planet p-song">
+
+    <div class="planet p-song" onclick="showInfo('song')">
       <div class="planet-ball">
         <svg viewBox="0 0 48 48" fill="none">
-          <rect x="20" y="8" width="10" height="22" rx="5" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <path d="M12 22a12 12 0 0 0 24 0" stroke="rgba(255,255,255,0.8)" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <line x1="24" y1="34" x2="24" y2="42" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
-          <line x1="16" y1="42" x2="32" y2="42" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+          <rect x="20" y="8" width="10" height="22" rx="5" fill="rgba(255,255,255,0.9)"/>
+          <path d="M12 22a12 12 0 0 0 24 0" stroke="rgba(255,255,255,0.9)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <line x1="24" y1="34" x2="24" y2="42" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="16" y1="42" x2="32" y2="42" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="planet-label"><h3>Песня</h3><p>Поёт от всего сердца — душа компании</p></div>
+      <div class="planet-name">Песня</div>
     </div>
-    <div class="planet p-dance">
+
+    <div class="planet p-dance" onclick="showInfo('dance')">
       <div class="planet-ball">
         <svg viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="10" r="5" fill="rgba(255,255,255,0.9)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          <path d="M24 15L20 28L14 38" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M24 15L28 28L34 38" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M22 22L30 20" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M15 34Q24 30 33 34" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="24" cy="10" r="5" fill="rgba(255,255,255,0.9)"/>
+          <path d="M24 15L20 28L14 38" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M24 15L28 28L34 38" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M22 22L30 20" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M15 34Q24 30 33 34" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linecap="round" fill="none"/>
         </svg>
       </div>
-      <div class="planet-label"><h3>Танец</h3><p>Энергия, от которой загорается весь зал</p></div>
+      <div class="planet-name">Танец</div>
     </div>
-  </div>
+
+  </div><!-- /planets -->
+  </div><!-- /planets-wrap -->
+
 </section>
 
 <div class="sep"></div>
@@ -289,20 +495,25 @@ h1{font-family:'Playfair Display',serif;font-weight:900;line-height:0.92;margin-
 <section class="finale">
   <h2>За тебя,<br>Наталья!</h2>
   <p>Свети ярче всех бриллиантов, танцуй до утра, пой во весь голос — и пусть дача цветёт, как никогда!</p>
-  <div class="plaque">
-    <div class="plaque-in">
-      <p>С любовью,<br>твои коллеги ✦</p>
-    </div>
-  </div>
+
 </section>
 
 <footer class="footer">
-  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
-    <svg id="musicIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-    </svg>
-    <span id="musicLabel">Включить музыку</span>
-  </button>
+  <!-- MINI PLAYER -->
+  <div class="player">
+    <button class="player-prev" onclick="playerPrev()">&#8592;</button>
+    <div class="player-center">
+      <div class="player-track" id="playerTrack">Наташин праздник</div>
+      <button class="player-play" id="playerPlay" onclick="playerToggle()">
+        <svg id="playerIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+        </svg>
+        <span id="playerLabel">Включить музыку</span>
+      </button>
+      <div class="player-dots" id="playerDots"></div>
+    </div>
+    <button class="player-next" onclick="playerNext()">&#8594;</button>
+  </div>
   <button class="surprise-btn" onclick="showSurprise()">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/>
@@ -327,25 +538,126 @@ h1{font-family:'Playfair Display',serif;font-weight:900;line-height:0.92;margin-
   </div>
 </div>
 
-<audio id="audio" src="music.mp3" loop></audio>
+<audio id="audio" loop></audio>
 
 <script>
-/* ── MUSIC ── */
+/* ── MINI PLAYER ── */
+const TRACKS = [
+  { file:'music1.mp3', name:'Наташин праздник' },
+  { file:'music2.mp3', name:'Песня для Натальи' },
+];
+
 const audio = document.getElementById('audio');
+let trackIdx = 0;
 let playing = false;
-function toggleMusic(){
-  if(!playing){
-    audio.play().catch(()=>{});
-    playing=true;
-    document.getElementById('musicLabel').textContent='Пауза';
-    document.getElementById('musicBtn').classList.add('playing');
-  }else{
-    audio.pause();
-    playing=false;
-    document.getElementById('musicLabel').textContent='Включить музыку';
-    document.getElementById('musicBtn').classList.remove('playing');
-  }
+
+function playerRender(){
+  const t = TRACKS[trackIdx];
+  document.getElementById('playerTrack').textContent = t.name;
+  document.getElementById('playerLabel').textContent = playing ? 'Пауза' : 'Включить музыку';
+  const btn = document.getElementById('playerPlay');
+  playing ? btn.classList.add('playing') : btn.classList.remove('playing');
+  // dots
+  const dots = document.getElementById('playerDots');
+  dots.innerHTML = TRACKS.map((_,i)=>
+    `<div class="player-dot${i===trackIdx?' active':''}"></div>`
+  ).join('');
 }
+
+function playerLoad(autoplay){
+  const t = TRACKS[trackIdx];
+  audio.src = t.file;
+  if(autoplay){
+    audio.play().catch(()=>{});
+    playing = true;
+  }
+  playerRender();
+}
+
+function playerToggle(){
+  if(!playing){
+    if(!audio.src || audio.src.endsWith('about:blank')){
+      playerLoad(true);
+    } else {
+      audio.play().catch(()=>{});
+      playing = true;
+    }
+  } else {
+    audio.pause();
+    playing = false;
+  }
+  playerRender();
+}
+
+function playerPrev(){
+  trackIdx = (trackIdx - 1 + TRACKS.length) % TRACKS.length;
+  playerLoad(playing);
+}
+
+function playerNext(){
+  trackIdx = (trackIdx + 1) % TRACKS.length;
+  playerLoad(playing);
+}
+
+audio.addEventListener('ended', ()=>{ playerNext(); });
+
+playerRender();
+
+const INFO = {
+  family:  { cls:'p-family',  title:'Семья',        text:'Двое взрослых детей и любимый внук — её главное сокровище и главный смысл жизни. Каждая встреча — настоящий праздник.', bg:'radial-gradient(circle at 35% 35%,#ffe89a,#e8960a 60%,#a05e00)' },
+  husband: { cls:'p-husband', title:'Любимый муж',  text:'Надёжное плечо, вечная поддержка и лучший друг. Вместе они — настоящая команда мечты.', bg:'radial-gradient(circle at 35% 35%,#ffc2d4,#d4006e 60%,#7a003d)' },
+  dog:     { cls:'p-dog',     title:'Бонька',       text:'Преданный пушистый друг, который всегда встречает у двери с самым счастливым хвостом в мире.', bg:'radial-gradient(circle at 35% 35%,#d8b4fe,#7b2fff 60%,#3d0099)' },
+  dacha:   { cls:'p-dacha',   title:'Дача',         text:'Уголок рая, обустроенный с любовью и настоящей гордостью. Там всё цветёт, всё вкусно и всегда есть место для гостей.', bg:'radial-gradient(circle at 35% 35%,#a7f3d0,#00b5a4 60%,#005c54)' },
+  song:    { cls:'p-song',    title:'Песня',        text:'Поёт от всего сердца — настоящая душа любой компании. Когда она запевает, все подхватывают.', bg:'radial-gradient(circle at 35% 35%,#fca5a5,#ff5252 60%,#991a1a)' },
+  dance:   { cls:'p-dance',   title:'Танец',        text:'Энергия, от которой загорается весь зал. Выходит в центр — и музыка сразу становится громче.', bg:'radial-gradient(circle at 35% 35%,#fde68a,#f5b800 60%,#805e00)' },
+};
+
+let activeKey = null;
+
+window.showInfo = function(key) {
+  const panel  = document.getElementById('infoPanel');
+  const inner  = document.getElementById('infoInner');
+  const dot    = document.getElementById('infoDot');
+  const title  = document.getElementById('infoTitle');
+  const text   = document.getElementById('infoText');
+
+  // deactivate all planets
+  document.querySelectorAll('.planet').forEach(p => p.classList.remove('active'));
+
+  if (activeKey === key) {
+    panel.classList.remove('open');
+    activeKey = null;
+    return;
+  }
+
+  const d = INFO[key];
+  activeKey = key;
+
+  // fill content
+  title.textContent = d.title;
+  text.textContent  = d.text;
+  dot.style.background = d.bg;
+  // copy the svg icon from clicked planet into infoDot
+  const srcSvg = document.querySelector('.planet.' + d.cls + ' .planet-ball svg');
+  dot.innerHTML = srcSvg ? srcSvg.outerHTML : '';
+  if (dot.firstElementChild) { dot.firstElementChild.style.width='24px'; dot.firstElementChild.style.height='24px'; }
+
+  // swap color class on inner
+  inner.className = 'info-inner ' + d.cls;
+
+  // activate planet
+  document.querySelector('.planet.' + d.cls).classList.add('active');
+
+  // open panel
+  panel.classList.add('open');
+};
+
+window.closeInfo = function(){
+  document.getElementById('infoPanel').classList.remove('open');
+  document.querySelectorAll('.planet').forEach(p=>p.classList.remove('active'));
+  activeKey = null;
+};
+
 
 /* ── SURPRISE ── */
 function showSurprise(){
@@ -646,6 +958,31 @@ function loop(){
   for(let i=pieces.length-1;i>=0;i--)   { pieces[i].draw();   if(!pieces[i].tick())   pieces.splice(i,1);   }
 }
 loop();
+
+/* ── WAVE при загрузке: шары подпрыгивают по очереди ── */
+(function launchWave(){
+  const balls = document.querySelectorAll('.planet-ball');
+  const baseDelay = 400; // старт через 400ms после загрузки
+  const step = 120;      // интервал между шарами
+
+  function runWave(){
+    balls.forEach((ball, i) => {
+      setTimeout(() => {
+        ball.classList.remove('wave');
+        void ball.offsetWidth; // reflow — перезапускает анимацию
+        ball.classList.add('wave');
+        ball.addEventListener('animationend', () => {
+          ball.classList.remove('wave');
+        }, { once: true });
+      }, baseDelay + i * step);
+    });
+  }
+
+  // первый запуск
+  runWave();
+  // повтор через 4 секунды — напоминание
+  setTimeout(runWave, 4000);
+})();
 </script>
 </body>
 </html>
